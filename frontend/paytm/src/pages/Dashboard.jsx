@@ -1,9 +1,12 @@
 import React from 'react'
+import { Appbar } from '../components/Appbar'
+import { Balance } from '../components/Balance'
+import { Users } from '../components/Users'
 
 const Dashboard = () => {
   return (
-    <div className='p-4'>
-      <div className='flex justify-between items-center shadow-md'>
+    <div>
+      {/* <div className='flex justify-between items-center shadow-md'>
         <h1>Payments App</h1>
         <div className='flex items-center '>
           <h1>Hello, User</h1>
@@ -40,7 +43,13 @@ const Dashboard = () => {
 
         <button className='bg-black text-white rounded-md'> Send Money</button>
       </div>
-      </div>
+      </div> */}
+
+      <Appbar />
+        <div className="m-8">
+            <Balance />
+            <Users />
+        </div>
 
     </div>
   )

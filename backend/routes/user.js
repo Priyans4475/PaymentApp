@@ -29,15 +29,16 @@ router.post("/signup",async(req,res,next)=>{
     }
 
 
-    const user=User.findOne({
-        username:body.username
+    const existingUser = await User.findOne({
+        username: req.body.username
     })
 
-    if(user._id){
-        return res.json({
-            message:'user already exist'
+    if (existingUser) {
+        return res.status(411).json({
+            message: "Email already taken/Incorrect inputs"
         })
     }
+    
    
 
     const dbUser=await User.create(body);
@@ -115,16 +116,41 @@ router.put("/update", authmiddleware, async (req, res) => {
 
 
 
+// router.get("/bulk", async (req, res) => {
+//     const filter = req.query.filter || "";
+
+//     const users = await User.find({
+//         $or: [{
+//             firstName: {
+//                 "$regex": filter
+//             }
+//         }, {
+//             lastName: {
+//                 "$regex": filter
+//             }
+//         }]
+//     })
+
+//     res.json({
+//         user: users.map(user => ({
+//             username: user.username,
+//             firstName: user.firstName,
+//             lastName: user.lastName,
+//             _id: user._id
+//         }))
+//     })
+// })
+
 router.get("/bulk", async (req, res) => {
     const filter = req.query.filter || "";
 
     const users = await User.find({
         $or: [{
-            firstName: {
+            firstname: {
                 "$regex": filter
             }
         }, {
-            lastName: {
+            lastname: {
                 "$regex": filter
             }
         }]
@@ -133,8 +159,8 @@ router.get("/bulk", async (req, res) => {
     res.json({
         user: users.map(user => ({
             username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            firstname: user.firstname,
+            lastname: user.lastname,
             _id: user._id
         }))
     })
