@@ -9,7 +9,7 @@ import Login from './components/Login'
 const App = () => {
   return (
 <Router>
-  <Register/>
+  <Dashboard/>
   <Routes>
     <Route path='/signup' element={<Register/> }/>
     <Route path='/dashboard' element={<Dashboard/>}/>

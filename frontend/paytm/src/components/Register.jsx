@@ -3,7 +3,7 @@ import React from 'react'
 const Register = () => {
   return (
     <div className='bg-white h-screen flex justify-center items-center '>
-<div className='w-full sm:w-1/2 md:w-1/3 rounded  shadow-lg bg-green-100 flex flex-col justify-center items-center'>
+<div className='w-full sm:w-1/2 md:w-1/3 rounded-lg  shadow-lg bg-green-100 flex flex-col justify-center items-center'>
 <div className=' font-serif text-5xl'>
 <h1>Sign Up</h1>
 </div>
