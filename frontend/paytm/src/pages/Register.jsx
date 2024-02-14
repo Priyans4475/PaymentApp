@@ -5,13 +5,14 @@ import Inputbox from '../components/Inputbox'
 import Buttonscompo from '../components/Buttonscompo'
 import Buttondown from '../components/Buttondown'
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [firstname,setfirstname]=useState('');
   const [lastname,setlastname]=useState('');
   const [username,setusername]=useState('');
   const [password,setpassword]=useState('');
-
+  const navigate = useNavigate();
   return (
 
     <div className='bg-white h-screen flex justify-center items-center '>
@@ -40,8 +41,8 @@ onchange={e=>{
  onClick={async () => {
   const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
     username,
-    firstName,
-    lastName,
+    firstname,
+    lastname,
     password
   });
   localStorage.setItem("token", response.data.token)

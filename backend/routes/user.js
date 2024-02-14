@@ -1,5 +1,4 @@
 const express=require('express');
-const userRouter=require('./index')
 const router=express.Router();
 const jwt=require('jsonwebtoken')
 const zod=require('zod');
@@ -7,7 +6,6 @@ require("dotenv").config();
 const {authmiddleware}=require('../middleware')
 
 const {User, Account}=require('../db');
-// const {JWT_SECRET} = require('../config.env');
 
 const signupSchema = zod.object({
     username: zod.string().email(),
@@ -52,7 +50,7 @@ router.post("/signup",async(req,res,next)=>{
     const token=jwt.sign({
         userId:dbUser._id
     },process.env.JWT_SECRET)
-
+   
     res.json({
         msg:'user created successfully',
         token:token
@@ -60,24 +58,7 @@ router.post("/signup",async(req,res,next)=>{
     
 });
 
-// router.put("/update",authmiddleware,async (req,res)=>{
-//     const body=req.body;
-//     const {success}=updateBody.safeParse(body);
-//     if(!success){
-//         res.status(411).json({
-//             message:'error while updating data'
-//         })
-//     }
 
-//     await User.updateOne(req.body,{
-//         id:req.userId
-//     })
-
-//     res.json({
-//         msg:'updated data successfully'
-//     })
-
-// })
 
 const updateBody = zod.object({
    
@@ -116,30 +97,7 @@ router.put("/update", authmiddleware, async (req, res) => {
 
 
 
-// router.get("/bulk", async (req, res) => {
-//     const filter = req.query.filter || "";
 
-//     const users = await User.find({
-//         $or: [{
-//             firstName: {
-//                 "$regex": filter
-//             }
-//         }, {
-//             lastName: {
-//                 "$regex": filter
-//             }
-//         }]
-//     })
-
-//     res.json({
-//         user: users.map(user => ({
-//             username: user.username,
-//             firstName: user.firstName,
-//             lastName: user.lastName,
-//             _id: user._id
-//         }))
-//     })
-// })
 
 router.get("/bulk", async (req, res) => {
     const filter = req.query.filter || "";
@@ -166,34 +124,68 @@ router.get("/bulk", async (req, res) => {
     })
 })
 
-router.post('/signin', async (req, res) => {
-    const { email, password } = req.body;
+// router.post('/signin', async (req, res) => {
+//     const { email, password } = req.body;
 
-    try {
+//     try {
 
-        // Check if user exists
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
+//         // Check if user exists
+//         const user = await User.findOne({ email });
+//         if (!user) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
 
-        // Check if password is correct
-        const isPasswordValid = user.password;
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid password' });
-        }
+//         // Check if password is correct
+//         const isPasswordValid = user.password;
+//         if (!isPasswordValid) {
+//             return res.status(401).json({ message: 'Invalid password' });
+//         }
 
-        // Generate JWT token
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+//         // Generate JWT token
+//         const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Respond with token
-        res.json({ 
+//         // Respond with token
+
+//         res.json({ 
            
-            token:token });
-    } catch (error) {
-        console.error('Error occurred during sign-in:', error);
-        res.status(500).json({ message: 'Internal server error' });
+//             token:token });
+//     } catch (error) {
+//         console.error('Error occurred during sign-in:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// });
+const signinBody = zod.object({
+    username: zod.string().email(),
+	password: zod.string()
+})
+router.post("/signin", async (req, res) => {
+    const { success } = signinBody.safeParse(req.body)
+    if (!success) {
+        return res.status(411).json({
+            message: "Email already taken / Incorrect inputs"
+        })
     }
-});
 
+    const user = await User.findOne({
+        username: req.body.username,
+        password: req.body.password
+        
+    });
+
+    if (user) {
+        const token = jwt.sign({
+            userId: user._id
+        }, process.env.JWT_SECRET);
+  
+        res.json({
+            token: token
+        })
+        return;
+    }
+
+    
+    res.status(411).json({
+        message: "Error while logging in"
+    })
+})
 module.exports=router;

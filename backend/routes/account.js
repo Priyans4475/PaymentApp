@@ -9,29 +9,6 @@ const {authmiddleware}=require('../middleware')
 const {User, Account}=require('../db');
 const { default: mongoose } = require('mongoose');
 
-// router.get('/balance',authmiddleware,async(req,res)=>{
-
-//     const account=Account.findOne({
-//         userId:req.userId
-//     })
-
-//     res.json({
-//         balance:account.balance
-//     })
-// })
-
-// router.get("/balance", authmiddleware, async (req, res) => {
-//     const account = await Account.findOne({
-//         userId: req.userId
-//     });
-
-
-     
-//     res.json({
-//         balance: account.balance
-//     })
-// });
-
 router.get("/balance", authmiddleware, async (req, res) => {
     const account = await Account.findOne({
         userId: req.userId
@@ -45,51 +22,7 @@ router.get("/balance", authmiddleware, async (req, res) => {
 
 
 
-// router.post('/transfer',authmiddleware,async(req,res)=>{
 
-
- 
-
-//     const {to,amount}=req.body;
-
-//     const account=Account.findOne({
-//         userId:req.userId
-//     })
-
-//     if(!account || account.balance<amount)
-//     {
-       
-//         return res.status(400).json({
-//             msg:'insufficient balance'
-//         })
-//     }
-
-//     const toaccount=Account.findOne({
-//         userId:to
-//     })
-
-//     if(!toaccount){
-       
-//         return res.status(400).json({
-//             msg:'recievers account is not available'
-//         })
-//     }
-
-//     await Account.updateOne({
-//         userId:req.userId
-//     },{$inc:{balance:-amount}})
-
-//     await Account.updateOne({
-//         userId:to
-//     },{$inc:{balance:amount}})
-
-   
-//     res.json({
-//         msg:'Tranfer successfull'
-//     });
-
-
-// })
 
 router.post('/transfer', authmiddleware, async (req, res,next) => {
     try {
