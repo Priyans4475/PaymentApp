@@ -7,7 +7,7 @@ const Logout = () => {
   const navigate = useNavigate();
   function handleLogOut() {
     localStorage.removeItem("token"); // Corrected line
-    navigate("/signin") // Corrected line - typo in "/signin" instead of "/sigin"
+    navigate("/") // Corrected line - typo in "/signin" instead of "/sigin"
   }
 
   return (

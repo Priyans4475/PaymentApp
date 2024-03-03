@@ -23,11 +23,11 @@ const Register = () => {
 <Inputbox onchange={e=>{
   setfirstname(e.target.value)
 }}
-inputheader={'First Name'} type={'text'} placeholder={'Kalu'}/>
+inputheader={'First Name'} type={'text'} placeholder={'Firstname'}/>
 <Inputbox  onchange={e=>{
   setlastname(e.target.value)
 }}
- inputheader={'Last Name'} type={'text'} placeholder={'madari'}/>
+ inputheader={'Last Name'} type={'text'} placeholder={'lastname'}/>
 <Inputbox 
 onchange={e=>{
   setusername(e.target.value)
@@ -50,7 +50,7 @@ onchange={e=>{
 }} label={'Sign Up'}/>
 </div>
 
-<Buttondown label={'Already have an account ?'} buttontext={'Sign In'} to={'/signin'}/>
+<Buttondown label={'Already have an account ?'} buttontext={'Sign In'} to={'/'}/>
 </div>
 </div>
   )

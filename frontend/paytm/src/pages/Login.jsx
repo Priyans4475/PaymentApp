@@ -20,7 +20,7 @@ const Login = () => {
       setusername(e.target.value)
     }
     }
-    inputheader={'Email'} type={'email'} placeholder={'abc@gmail.com'}/>
+    inputheader={'Email'} type={'email'} placeholder={'user@gmail.com'}/>
     <Inputbox 
     onchange={(e)=>{
       setpassword(e.target.value)
