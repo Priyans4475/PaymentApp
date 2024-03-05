@@ -130,8 +130,8 @@ router.get("/bulk", async (req, res) => {
     })
 })
 
-// router.post('/signin', async (req, res) => {
-//     const { email, password } = req.body;
+// router.get('/', async (req, res) => {
+//     
 
 //     try {
 
@@ -160,6 +160,24 @@ router.get("/bulk", async (req, res) => {
 //         res.status(500).json({ message: 'Internal server error' });
 //     }
 // });
+
+
+
+router.get('/',async(req,res)=>{
+    try{
+     const users=await User.find()
+    
+    res.json(users);
+ }
+    catch (err) {
+     console.error('Error fetching data:', err);
+     res.status(500).json({ error: 'Internal Server Error' });
+ 
+    }
+     
+ 
+ })
+ 
 const signinBody = zod.object({
     username: zod.string().email(),
 	password: zod.string()
