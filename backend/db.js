@@ -1,7 +1,15 @@
 const mongoose=require('mongoose')
-mongoose.connect("mongodb+srv://kumar4475priyanshu:grrF3ZqjqTmouHI8@cluster0.kz3fgly.mongodb.net/")
+// mongoose.connect("mongodb+srv://kumar4475priyanshu:grrF3ZqjqTmouHI8@cluster0.kz3fgly.mongodb.net/")
+// mongoose.connect("mongodb://127.0.0.1:27017/paytm")
 
+mongoose.connect("mongodb+srv://kumar4475priyanshu:grrF3ZqjqTmouHI8@cluster0.kz3fgly.mongodb.net/").then(()=>{
+    console.log('database connected successfully');
+})
+.catch((err)=>{
+    console.log(err);
 
+})
+// mongodb://127.0.0.1:27017/myEcommdb
 const userSchema=mongoose.Schema({
 username:String,
 password:String,
