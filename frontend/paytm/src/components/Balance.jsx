@@ -8,7 +8,7 @@ export const Balance = ({  }) => {
         const fetchBalance = async () => {
             try {
                 axios
-  .get("http://localhost:3000/api/v1/account/balance",
+  .get("https://paymentapp-10.onrender.com/api/v1/account/balance",
   {
     headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
